@@ -18,9 +18,9 @@ services:
         image: b2un0/netcup-dyndns:latest
         restart: unless-stopped
         container_name: netcup-dyndns
-        network_mode: bridge
+        network_mode: host # necessary for ipv6!
         environment:
-            SCHEDULER: "*/10 * * * *" # https://crontab.guru/
+            SCHEDULE: "*/10 * * * *" # https://crontab.guru/
             DOMAIN: "nas.domain.tld"
             MODE: "both" # can be "@", "*" or "both"
             IPV4: "yes"
