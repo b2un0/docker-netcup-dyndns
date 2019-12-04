@@ -33,7 +33,6 @@ services:
 
 ## References
 * DNS API Documentation: https://ccp.netcup.net/run/webservice/servers/endpoint.php
-* Source of dnsapi.php: https://ccp.netcup.net/run/webservice/servers/endpoint.php?PHPSOAPCLIENT
 
 ## License
 Published under GNU General Public License v3.0  

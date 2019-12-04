@@ -21,9 +21,7 @@ RUN mkdir /app/
 
 ADD . /app/
 
-RUN php -m
-
-RUN echo "@reboot php /app/updater.php" > /etc/crontabs/root
-RUN echo "${SCHEDULE} php /app/updater.php" >> /etc/crontabs/root
+RUN echo "@reboot php /app/updater.php" > /etc/crontabs/root && \
+    echo "${SCHEDULE} php /app/updater.php" >> /etc/crontabs/root
 
 CMD ["/usr/sbin/crond", "-l", "2", "-f"]
