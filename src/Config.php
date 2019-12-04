@@ -1,135 +1,102 @@
 <?php
 
+declare(strict_types=1);
+
 namespace netcup\DNS\API;
 
 final class Config
 {
+    private string $apiKey;
 
-    /**
-     * @var string
-     */
-    private $username;
+    private string $apiPassword;
 
-    /**
-     * @var string
-     */
-    private $password;
+    private int $customerId;
 
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private string $domain;
 
-    /**
-     * @var string
-     */
-    private $apiPassword;
+    private string $mode;
 
-    /**
-     * @var int
-     */
-    private $customerId;
+    private int $ttl;
 
-    /**
-     * @var bool
-     */
-    private $log = true;
+    private bool $force;
 
-    /**
-     * @var string
-     */
-    private $logFile;
-
-    /**
-     * @var bool
-     */
-    private $debug;
-
-    public function __construct(array $config)
+    public function __construct(string $domain, string $mode, int $customerId, string $apiKey, string $apiPassword, int $ttl, bool $force = false)
     {
-        foreach (get_object_vars($this) as $key => $val) {
-            if (isset($config[$key])) {
-                $this->$key = $config[$key];
-            }
-        }
+        $this->domain = $domain;
+        $this->mode = $mode;
+        $this->customerId = $customerId;
+        $this->apiKey = $apiKey;
+        $this->apiPassword = $apiPassword;
+        $this->ttl = $ttl;
+        $this->force = $force;
     }
 
-    /**
-     * @return bool
-     */
-    public function isValid()
-    {
-        return
-            !empty($this->username) &&
-            !empty($this->password) &&
-            !empty($this->apiKey) &&
-            !empty($this->apiPassword) &&
-            !empty($this->customerId) &&
-            !empty($this->logFile);
-
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiPassword()
+    public function getApiPassword(): string
     {
         return $this->apiPassword;
     }
 
-    /**
-     * @return int
-     */
-    public function getCustomerId()
+    public function getCustomerId(): int
     {
         return $this->customerId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLog()
+    public function getDomain(): string
     {
-        return $this->log;
+        return $this->domain;
     }
-    
-    /**
-     * @return string
-     */
-    public function getLogFile()
+
+    public function getMatcher(): array
     {
-        return $this->logFile;
+        switch ($this->mode) {
+            case 'both':
+                return ['@', '*'];
+
+            case '*':
+                return ['*'];
+
+            default:
+                return ['@'];
+        }
     }
 
     /**
-     * @return bool
+     * there is no good way to get the correct "registrable" Domain without external libs!
+     *
+     * @see https://github.com/jeremykendall/php-domain-parser
+     *
+     * this method is still tricky, because:
+     *
+     * works: nas.tld.com
+     * works: nas.tld.de
+     * works: tld.com
+     * failed: nas.tld.co.uk
+     * failed: nas.home.tld.de
      */
-    public function isDebug()
+    public function getHostname(): string
     {
-        return $this->debug;
+        // hack if top level domain are used for dynDNS
+        if (1 === substr_count($this->domain, '.')) {
+            return $this->domain;
+        }
+
+        $domainParts = explode('.', $this->domain);
+        array_shift($domainParts); // remove sub domain
+        return implode('.', $domainParts);
+    }
+
+    public function getTtl(): int
+    {
+        return $this->ttl;
+    }
+
+    public function isForce(): bool
+    {
+        return $this->force;
     }
 }
