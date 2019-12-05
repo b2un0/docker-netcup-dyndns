@@ -1,4 +1,10 @@
-# Netcup DNS API DynDNS Docker Client  
+# Netcup DNS API DynDNS Docker Client
+
+![Docker Pulls](https://img.shields.io/docker/pulls/b2un0/netcup-dyndns.svg)
+![Docker Stars](https://img.shields.io/docker/stars/b2un0/netcup-dyndns.svg)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/b2un0/netcup-dyndns)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/b2un0/netcup-dyndns.svg)
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/b2un0/netcup-dyndns.svg)
 
 based on business logic from:
 - https://github.com/fernwerker/ownDynDNS
@@ -9,7 +15,7 @@ based on business logic from:
 
 ## run as docker container
 
-via `docker-compose.yml` on your nas
+via `docker-compose.yml` on your NAS
 ````yaml
 version: '3'
 
