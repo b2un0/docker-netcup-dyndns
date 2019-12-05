@@ -1,5 +1,8 @@
 FROM php:7-cli-alpine
 
+ARG BUILD_DATE
+ARG VCS_REF
+
 ENV SCHEDULE "*/10 * * * *"
 
 ENV DOMAIN ""
@@ -27,5 +30,7 @@ RUN echo "@reboot php /app/updater.php" > /etc/crontabs/root && \
 CMD ["/usr/sbin/crond", "-l", "2", "-f"]
 
 LABEL org.label-schema.name="Netcup DNS API DynDNS Docker Client" \
-      org.label-schema.vcs-url="https://github.com/b2un0/docker-netcup-dyndns" \
+      org.label-schema.vcs-ref=${VCS_REF} \
+      org.label-schema.build-date=${BUILD_DATE} \
+      org.label-schema.vcs-url="https://github.com/b2un0/docker-netcup-dyndns.git" \
       org.label-schema.schema-version="1.0"
