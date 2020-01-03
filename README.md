@@ -11,7 +11,7 @@ based on business logic from:
 - https://github.com/fernwerker/ownDynDNS
 - https://github.com/stecklars/dynamic-dns-netcup-api
 
-This container uses the official [PHP image](https://hub.docker.com/_/php/) as a base image (cli-slim)
+This container uses the official [PHP image](https://hub.docker.com/_/php/) as a base image (cli-alpine)
 
 ## pre requirements
 * Create each host record in your netcup CCP before using the script. The script does not create any missing records!
@@ -39,6 +39,29 @@ services:
             API_KEY: "<apiKey>"
             API_PASSWORD: "<apiPassword>"
 ````
+
+## run without docker
+
+via `wrapper.php` (or some other script name)
+```
+<?php
+
+$_ENV['DOMAIN'] = 'nas.domain.tld';
+$_ENV['MODE'] = 'both';  # can be "@", "*" or "both"
+
+$_ENV['CUSTOMER_ID'] = '<customerId>';
+$_ENV['API_KEY'] = '<apiKey>';
+$_ENV['API_PASSWORD'] = '<apiPassword>';
+
+$_ENV['TTL'] = 300; # 0 or remove if zone ttl should not change
+
+$_ENV['IPV4'] = 'yes';
+$_ENV['IPV6'] = 'no';
+
+$_ENV['FORCE'] = 'no';
+
+require 'updater.php';
+```
 
 ## References
 * DNS API Documentation: https://ccp.netcup.net/run/webservice/servers/endpoint.php
