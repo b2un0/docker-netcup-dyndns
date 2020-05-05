@@ -2,8 +2,7 @@
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/b2un0/netcup-dyndns.svg)
 ![Docker Stars](https://img.shields.io/docker/stars/b2un0/netcup-dyndns.svg)
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/b2un0/netcup-dyndns.svg)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/b2un0/netcup-dyndns.svg)
+![Docker Build](https://github.com/b2un0/docker-netcup-dyndns/workflows/%5Bdocker%5D%20CI%20for%20releases/badge.svg?branch=master&event=push)
 ![MicroBadger Size](https://img.shields.io/microbadger/image-size/b2un0/netcup-dyndns.svg)
 
 ## Credits
