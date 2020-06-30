@@ -47,7 +47,7 @@ final class DynDNS
             }
         }
 
-        $records = $this->client->infoDnsRecords($sid, $this->config->getDomain());
+        $records = $this->client->infoDnsRecords($sid, $this->config->getHostname());
 
         $changes = false;
 
@@ -83,9 +83,9 @@ final class DynDNS
         }
 
         if (true === $changes) {
-
             $this->client->updateDnsRecords(
-                $sid, $this->config->getDomain(),
+                $sid,
+                $this->config->getHostname(),
                 $records->responsedata->dnsrecords
             );
 
