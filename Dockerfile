@@ -31,4 +31,4 @@ CMD ["/usr/sbin/crond", "-l", "2", "-f"]
 
 LABEL org.opencontainers.image.created=${BUILD_DATE} \
       org.opencontainers.image.revision=${VCS_REF} \
-      org.opencontainers.image.source="https://github.com/b2un0/docker-netcup-dyndn"
+      org.opencontainers.image.source="https://github.com/b2un0/docker-netcup-dyndns"
