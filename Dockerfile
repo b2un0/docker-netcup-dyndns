@@ -29,8 +29,6 @@ RUN echo "@reboot php /app/updater.php" > /etc/crontabs/root && \
 
 CMD ["/usr/sbin/crond", "-l", "2", "-f"]
 
-LABEL org.label-schema.name="Netcup DNS API DynDNS Docker Client" \
-      org.label-schema.vcs-ref=${VCS_REF} \
-      org.label-schema.build-date=${BUILD_DATE} \
-      org.label-schema.vcs-url="https://github.com/b2un0/docker-netcup-dyndns.git" \
-      org.label-schema.schema-version="1.0"
+LABEL org.opencontainers.image.created=${BUILD_DATE} \
+      org.opencontainers.image.revision=${VCS_REF} \
+      org.opencontainers.image.source="https://github.com/b2un0/docker-netcup-dyndn"
