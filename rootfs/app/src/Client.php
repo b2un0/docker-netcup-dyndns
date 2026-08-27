@@ -145,7 +145,6 @@ final class Client
                 0 !== $httpCode ? ' (HTTP ' . $httpCode . ')' : '',
             ));
         }
-
         $response = json_decode($result, false, 512, JSON_THROW_ON_ERROR);
 
         if (2000 !== $response->statuscode) {
