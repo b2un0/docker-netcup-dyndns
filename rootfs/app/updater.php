@@ -28,13 +28,15 @@ function resolve_env(string $name, string $default = ''): string
 }
 
 if ('yes' === $_ENV['IPV4']) {
-    $ipv4 = trim(file_get_contents('http://v4.ident.me'));
+    $ipv4Url = $_ENV['IPV4_URL'] ?? 'http://v4.ident.me';
+    $ipv4 = trim(file_get_contents($ipv4Url));
 } else {
     $ipv4 = null;
 }
 
 if ('yes' === $_ENV['IPV6']) {
-    $ipv6 = trim(file_get_contents('http://v6.ident.me'));
+    $ipv6Url = $_ENV['IPV6_URL'] ?? 'http://v6.ident.me';
+    $ipv6 = trim(file_get_contents($ipv6Url));
 } else {
     $ipv6 = null;
 }

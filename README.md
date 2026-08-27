@@ -33,6 +33,8 @@ services:
             IPV4: "yes"
             IPV6: "yes"
             TTL: "300" # 0 or remove if zone ttl should not change
+            # IPV4_URL: "https://api.ipify.org"   # optional, default: http://v4.ident.me
+            # IPV6_URL: "https://api6.ipify.org"  # optional, default: http://v6.ident.me
             CUSTOMER_ID: "<customerId>"
             API_KEY: "<apiKey>"
             API_PASSWORD: "<apiPassword>"
@@ -71,6 +73,8 @@ services:
             IPV4: "yes"
             IPV6: "yes"
             TTL: "300" # 0 or remove if zone ttl should not change
+            # IPV4_URL: "https://api.ipify.org"   # optional, default: http://v4.ident.me
+            # IPV6_URL: "https://api6.ipify.org"  # optional, default: http://v6.ident.me
             CUSTOMER_ID_FILE: /run/secrets/netcup_customer_id
             API_KEY_FILE: /run/secrets/netcup_api_key
             API_PASSWORD_FILE: /run/secrets/netcup_api_password
@@ -94,6 +98,9 @@ $_ENV['TTL'] = 300; # 0 or remove if zone ttl should not change
 $_ENV['IPV4'] = 'yes';
 $_ENV['IPV6'] = 'no';
 
+# $_ENV['IPV4_URL'] = 'https://api.ipify.org';  // optional, default: http://v4.ident.me
+# $_ENV['IPV6_URL'] = 'https://api6.ipify.org'; // optional, default: http://v6.ident.me
+
 $_ENV['FORCE'] = 'no';
 
 require 'updater.php';
@@ -101,6 +108,8 @@ require 'updater.php';
 
 ## References
 * DNS API Documentation: https://ccp.netcup.net/run/webservice/servers/endpoint.php
+* Default IPv4 lookup: http://v4.ident.me – alternatives: https://api.ipify.org
+* Default IPv6 lookup: http://v6.ident.me – alternatives: https://api6.ipify.org
 
 ## License
 Published under GNU General Public License v3.0  
