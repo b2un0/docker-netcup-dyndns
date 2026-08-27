@@ -39,16 +39,42 @@ function validate_url(string $url, string $varName): string
     return $url;
 }
 
+/**
+ * Tries each URL in a comma-separated list until one returns a non-empty response.
+ * Returns the trimmed IP string, or null if all URLs fail.
+ */
+function fetch_ip_from_urls(string $urlList, string $varName): ?string
+{
+    foreach (array_map('trim', explode(',', $urlList)) as $url) {
+        if ($url === '') {
+            continue;
+        }
+        validate_url($url, $varName);
+        $result = @file_get_contents($url);
+        if ($result !== false && trim($result) !== '') {
+            return trim($result);
+        }
+        fprintf(STDERR, "Warning: could not fetch IP from %s, trying next fallback.\n", $url);
+    }
+    return null;
+}
+
 if ('yes' === $_ENV['IPV4']) {
-    $ipv4Url = validate_url($_ENV['IPV4_URL'] ?? 'http://v4.ident.me', 'IPV4_URL');
-    $ipv4 = trim(file_get_contents($ipv4Url));
+    $ipv4UrlList = $_ENV['IPV4_URL'] ?? 'http://v4.ident.me,http://v4.tnedi.me';
+    $ipv4 = fetch_ip_from_urls($ipv4UrlList, 'IPV4_URL');
+    if ($ipv4 === null) {
+        throw new \RuntimeException('Could not determine IPv4 address from any configured URL.');
+    }
 } else {
     $ipv4 = null;
 }
 
 if ('yes' === $_ENV['IPV6']) {
-    $ipv6Url = validate_url($_ENV['IPV6_URL'] ?? 'http://v6.ident.me', 'IPV6_URL');
-    $ipv6 = trim(file_get_contents($ipv6Url));
+    $ipv6UrlList = $_ENV['IPV6_URL'] ?? 'http://v6.ident.me,http://v6.tnedi.me';
+    $ipv6 = fetch_ip_from_urls($ipv6UrlList, 'IPV6_URL');
+    if ($ipv6 === null) {
+        throw new \RuntimeException('Could not determine IPv6 address from any configured URL.');
+    }
 } else {
     $ipv6 = null;
 }
