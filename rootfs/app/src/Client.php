@@ -134,8 +134,6 @@ final class Client
 
         $result = curl_exec($ch);
 
-        curl_close($ch);
-
         $response = json_decode($result, false, 512, JSON_THROW_ON_ERROR);
 
         if (2000 !== $response->statuscode) {
