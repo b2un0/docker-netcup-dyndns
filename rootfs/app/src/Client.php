@@ -133,13 +133,23 @@ final class Client
         curl_setopt_array($ch, $curlOptions);
 
         $result = curl_exec($ch);
+        $curlError = curl_error($ch);
+        $httpCode = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 
         curl_close($ch);
+
+        if (false === $result) {
+            throw new \RuntimeException(sprintf(
+                'Netcup API request failed%s%s',
+                '' !== $curlError ? ': ' . $curlError : '',
+                0 !== $httpCode ? ' (HTTP ' . $httpCode . ')' : '',
+            ));
+        }
 
         $response = json_decode($result, false, 512, JSON_THROW_ON_ERROR);
 
         if (2000 !== $response->statuscode) {
-            throw new \RuntimeException($response->longmessage);
+            throw new \RuntimeException($response->longmessage ?? $response->shortmessage ?? 'Netcup API request failed.');
         }
 
         return $response;
