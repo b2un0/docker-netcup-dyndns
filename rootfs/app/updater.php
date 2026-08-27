@@ -12,13 +12,13 @@ require_once __DIR__ . '/src/Config.php';
  * Reads an environment variable, falling back to the content of the file
  * referenced by <VAR>_FILE when the variable itself is not set (Docker secrets).
  */
-function env(string $name, string $default = ''): string
+function resolve_env(string $name, string $default = ''): string
 {
-    if (!empty($_ENV[$name])) {
+    if (isset($_ENV[$name])) {
         return $_ENV[$name];
     }
     $fileVar = $name . '_FILE';
-    if (!empty($_ENV[$fileVar])) {
+    if (isset($_ENV[$fileVar])) {
         $path = $_ENV[$fileVar];
         if (is_readable($path)) {
             return trim(file_get_contents($path));
@@ -46,9 +46,9 @@ if (!$ipv4 && !$ipv6) {
 $config = new Config(
     $_ENV['DOMAIN'],
     $_ENV['MODE'],
-    (int)env('CUSTOMER_ID'),
-    env('API_KEY'),
-    env('API_PASSWORD'),
+    (int)resolve_env('CUSTOMER_ID'),
+    resolve_env('API_KEY'),
+    resolve_env('API_PASSWORD'),
     (int)($_ENV['TTL'] ?? 0),
     'yes' === $_ENV['FORCE'],
 );
